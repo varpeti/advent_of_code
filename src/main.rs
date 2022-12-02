@@ -2,8 +2,11 @@ use std::fs::{self, DirEntry};
 
 mod day1;
 use crate::day1::*;
+mod day2;
+use crate::day2::*;
 
-const CALL: [(&dyn Fn(&String) -> String, &dyn Fn(&String) -> String); 1] = [(&day1_a, &day1_b)];
+const CALL: [(&dyn Fn(&String) -> String, &dyn Fn(&String) -> String); 2] =
+    [(&day1_a, &day1_b), (&day2_a, &day2_b)];
 
 fn get_day(file: &DirEntry, delimeter: &str) -> Result<usize, String> {
     Ok(file
@@ -24,9 +27,10 @@ fn main() {
         let file = file.expect("file error");
         let lines = fs::read_to_string(file.path()).expect("read error");
         if let Ok(day) = get_day(&file, "day") {
+            println!("day{}:", day);
             if let Some(calls) = CALL.get(day) {
-                println!("{}", calls.0(&lines));
-                println!("{}", calls.1(&lines));
+                println!("\ta: {}", calls.0(&lines));
+                println!("\tb: {}", calls.1(&lines));
             }
         }
     }
@@ -47,9 +51,14 @@ mod tests {
             let input = lines.collect::<Vec<_>>().join("\n");
             match get_day(&file, "test") {
                 Ok(day) => {
+                    println!("day{}:", day);
                     if let Some(calls) = CALL.get(day) {
-                        assert_eq!(calls.0(&input), answer_a);
-                        assert_eq!(calls.1(&input), answer_b);
+                        let result_a = calls.0(&input);
+                        println!("\ta: {} == {}", result_a, answer_a);
+                        assert_eq!(result_a, answer_a);
+                        let result_b = calls.1(&input);
+                        println!("\tb: {} == {}", result_b, answer_b);
+                        assert_eq!(result_b, answer_b);
                     }
                 }
                 Err(msg) => panic!("{}", msg),
