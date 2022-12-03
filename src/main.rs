@@ -4,9 +4,11 @@ mod day1;
 use crate::day1::*;
 mod day2;
 use crate::day2::*;
+mod day3;
+use crate::day3::*;
 
-const CALL: [(&dyn Fn(&String) -> String, &dyn Fn(&String) -> String); 2] =
-    [(&day1_a, &day1_b), (&day2_a, &day2_b)];
+const CALL: [(&dyn Fn(&String) -> String, &dyn Fn(&String) -> String); 3] =
+    [(&day1_a, &day1_b), (&day2_a, &day2_b), (&day3_a, &day3_b)];
 
 fn get_day(file: &DirEntry, delimeter: &str) -> Result<usize, String> {
     Ok(file
@@ -18,8 +20,7 @@ fn get_day(file: &DirEntry, delimeter: &str) -> Result<usize, String> {
         .next()
         .ok_or("day split error")?
         .parse::<usize>()
-        .map_err(|_| "parse error")?
-        - 1)
+        .map_err(|_| "parse error")?)
 }
 
 fn main() {
@@ -28,7 +29,7 @@ fn main() {
         let lines = fs::read_to_string(file.path()).expect("read error");
         if let Ok(day) = get_day(&file, "day") {
             println!("day{}:", day);
-            if let Some(calls) = CALL.get(day) {
+            if let Some(calls) = CALL.get(day - 1) {
                 println!("\ta: {}", calls.0(&lines));
                 println!("\tb: {}", calls.1(&lines));
             }
@@ -52,7 +53,7 @@ mod tests {
             match get_day(&file, "test") {
                 Ok(day) => {
                     println!("day{}:", day);
-                    if let Some(calls) = CALL.get(day) {
+                    if let Some(calls) = CALL.get(day - 1) {
                         let result_a = calls.0(&input);
                         println!("\ta: {} == {}", result_a, answer_a);
                         assert_eq!(result_a, answer_a);
