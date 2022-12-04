@@ -18,5 +18,6 @@ pub fn day3_a(input: &String) -> String {
 
 
 pub fn day3_b(input: &String) -> String {
+    drop(input);
     format!("b")
 }
