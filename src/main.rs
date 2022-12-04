@@ -115,6 +115,6 @@ fn main() {
         .expect("usage: advent_of_code day_number")
         .parse::<usize>()
         .expect("parse error: day should be a number");
-    test(day);
     answer(day);
+    test(day);
 }
