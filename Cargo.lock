@@ -6,6 +6,7 @@ version = 3
 name = "advent_of_code"
 version = "0.1.0"
 dependencies = [
+ "import",
  "regex",
 ]
 
@@ -17,6 +18,10 @@ checksum = "cc936419f96fa211c1b9166887b38e5e40b19958e5b895be7c1f93adec7071ac"
 dependencies = [
  "memchr",
 ]
+
+[[package]]
+name = "import"
+version = "0.1.0"
 
 [[package]]
 name = "memchr"
