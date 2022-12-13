@@ -38,7 +38,7 @@ pub fn day10_a(input: &String) -> String {
     format!("{}", sum)
 }
 
-#[derive(Debug, Clone)]
+#[derive(Debug)]
 struct Task {
     remaining_cycle: usize,
     dx: i32,
@@ -71,13 +71,11 @@ pub fn day10_b(input: &String) -> String {
     let mut reg_x = 1;
     let mut lines = input.lines();
     let mut current_task = get_next_task(&mut lines);
-    let mut s = String::new();
     for _y in 0..6 {
         for x in 0..40 {
             if (reg_x - 1..reg_x + 2).contains(&x) {
                 print!("#");
             } else {
-                s = format!("{}.", s);
                 print!(".");
             }
             if let Some(task) = &mut current_task {
