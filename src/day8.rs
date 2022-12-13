@@ -113,7 +113,54 @@ pub fn day8_a(input: &String) -> String {
     format!("{}", coords.len())
 }
 
+fn get_or_9(trees: &Trees, y: usize, x: usize) -> u8 {
+    if let Some(row) = trees.get(y) {
+        if let Some(&height) = row.get(x) {
+            return height;
+        }
+    }
+    9
+}
+
 pub fn day8_b(input: &String) -> String {
-    drop(input);
-    format!("b")
+    let trees = parse_trees(input);
+    let xx = trees[0].len();
+    let yy = trees.len();
+    let mut best = 0;
+    for y in 0..yy {
+        for x in 0..xx {
+            let mut visible = [0; 4];
+            //to Right
+            for n in x + 1..xx {
+                visible[0] += 1;
+                if get_or_9(&trees, y, n) >= trees[y][x] {
+                    break;
+                }
+            }
+            //to Left
+                for n in (0..x).rev() {
+                    visible[1] += 1;
+                    if get_or_9(&trees, y, n) >= trees[y][x] {
+                        break;
+                    }
+                }
+            //to Bottom
+            for n in y+1..yy {
+                visible[2] += 1;
+                if get_or_9(&trees, n, x) >= trees[y][x] {
+                    break;
+                }
+            }
+            //to Top 
+            for n in (0..y).rev() {
+                visible[3] += 1;
+                if get_or_9(&trees, n, x) >= trees[y][x] {
+                    break;
+                }
+            }
+
+            best = u32::max(best, visible.iter().product());
+        }
+    }
+    format!("{}", best)
 }
