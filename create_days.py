@@ -1,13 +1,14 @@
 import os
+import datetime
 
 STR_FUNCTIONS = '''
 pub fn day{day}_a(input: &String) -> String {{
-    drop(input);
+    drop(input.to_owned());
     format!("a")
 }}
 
 pub fn day{day}_b(input: &String) -> String {{
-    drop(input);
+    drop(input.to_owned());
     format!("b")
 }}
 '''
@@ -19,7 +20,8 @@ def write_file(file_name: str, data: str):
         f.write(data)
 
 if __name__ == "__main__":
-    for day in range(1, 26):
-        write_file(f"src/day{day}.rs", STR_FUNCTIONS.format(day=day))
-        write_file(f"tests/test{day}", "TODO\nTODO")
-        write_file(f"inputs/day{day}", "")
+    year = datetime.date.today().year
+    for day in range(1, 25):
+        write_file(f"{year}/src/d{day}.rs", STR_FUNCTIONS.format(day=day))
+        write_file(f"{year}/tests/t{day}", "TODO\nTODO")
+        write_file(f"{year}/inputs/i{day}", "")

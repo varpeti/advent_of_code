@@ -6,7 +6,7 @@ do_imports!();
 do_function_call_array!();
 
 fn answer(day: usize) {
-    let lines = fs::read_to_string(format!("inputs/day{}", day)).expect("input read error");
+    let lines = fs::read_to_string(format!("inputs/i{}", day)).expect("input read error");
     println!("answer:");
     if let Some(calls) = CALL.get(day - 1) {
         println!("\ta: {}", calls.0(&lines));
@@ -15,7 +15,7 @@ fn answer(day: usize) {
 }
 
 fn test(day: usize) {
-    let all_lines = fs::read_to_string(format!("tests/test{}", day)).expect("test read error");
+    let all_lines = fs::read_to_string(format!("tests/t{}", day)).expect("test read error");
     let mut lines = all_lines.lines();
     let answer_a = lines.next().expect("answer_a error");
     let answer_b = lines.next().expect("answer_b error");
@@ -38,6 +38,6 @@ fn main() {
         .expect("usage: advent_of_code day_number")
         .parse::<usize>()
         .expect("parse error: day should be a number");
-    answer(day);
     test(day);
+    answer(day);
 }
