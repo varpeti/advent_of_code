@@ -1,2 +1,2 @@
-inputs/** filter=git-crypt diff=git-crypt
-tests/** filter=git-crypt diff=git-crypt
+**/inputs/** filter=git-crypt diff=git-crypt
+**/tests/** filter=git-crypt diff=git-crypt
