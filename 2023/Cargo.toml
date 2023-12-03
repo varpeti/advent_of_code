@@ -6,5 +6,6 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-import = {path = "../libs/import/"}
+import    = {path = "../libs/import/"}
 itertools = {version = "0.12"}
+regex     = {version = "1.10"}
