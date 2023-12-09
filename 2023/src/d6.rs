@@ -4,8 +4,8 @@
 // ------------------
 // (t - sqrt(t*t-4d))/2 < x < (t + sqrt(t*t-4d))
 
-pub fn day6_a(input: &String) -> String {
-    let mut input = input.split("\n");
+pub fn day6_a(input: &str) -> String {
+    let mut input = input.split('\n');
     let times = input
         .next()
         .expect("time")
@@ -39,8 +39,8 @@ pub fn day6_a(input: &String) -> String {
     format!("{}", res)
 }
 
-pub fn day6_b(input: &String) -> String {
-    let mut input = input.split("\n");
+pub fn day6_b(input: &str) -> String {
+    let mut input = input.split('\n');
     let time = input
         .next()
         .expect("time")

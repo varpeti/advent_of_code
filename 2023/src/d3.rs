@@ -17,7 +17,7 @@ enum PartType {
 const N: usize = 141;
 const MAX_LEN: i32 = 3;
 
-pub fn day3_a(input: &String) -> String {
+pub fn day3_a(input: &str) -> String {
     let mut parts = [[None; N]; N];
     let parts_re = Regex::new(r"(\d+|[^.\d])").expect("parts_re");
     for (y, line) in input.lines().enumerate() {
@@ -70,7 +70,7 @@ pub fn day3_a(input: &String) -> String {
     format!("{}", sum)
 }
 
-pub fn day3_b(input: &String) -> String {
+pub fn day3_b(input: &str) -> String {
     let mut parts = [[None; N]; N];
     let parts_re = Regex::new(r"(\d+|[*])").expect("parts_re");
     for (y, line) in input.lines().enumerate() {
@@ -127,7 +127,7 @@ pub fn day3_b(input: &String) -> String {
                     if count == 2 {
                         sum += gear_ratio;
                     }
-                    println!("")
+                    println!()
                 }
             }
         }

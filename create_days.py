@@ -2,14 +2,14 @@ import os
 import datetime
 
 STR_FUNCTIONS = '''
-pub fn day{day}_a(input: &String) -> String {{
+pub fn day{day}_a(input: &str) -> String {{
     drop(input.to_owned());
-    format!("a")
+    format!("{{}}", 'a')
 }}
 
-pub fn day{day}_b(input: &String) -> String {{
+pub fn day{day}_b(input: &str) -> String {{
     drop(input.to_owned());
-    format!("b")
+    format!("{{}}", 'b')
 }}
 '''
 

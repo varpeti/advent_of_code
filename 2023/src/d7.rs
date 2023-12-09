@@ -1,5 +1,3 @@
-use crate::d7::m_day7_b::show_card;
-
 mod m_day7_a {
     use itertools::Itertools;
     use std::cmp::Ordering;
@@ -102,7 +100,7 @@ mod m_day7_a {
     }
 }
 
-pub fn day7_a(input: &String) -> String {
+pub fn day7_a(input: &str) -> String {
     let mut hands = input
         .lines()
         .map(m_day7_a::to_hand)
@@ -138,7 +136,7 @@ mod m_day7_b {
         }
     }
 
-    pub fn show_card(c: Card) -> char {
+    pub fn _show_card(c: Card) -> char {
         match c {
             0 => 'J',
             1..=8 => (c + 49) as char,
@@ -178,7 +176,7 @@ mod m_day7_b {
             let mut is_threekind = false;
             let mut num_onepair: u8 = 0;
             for (card, count) in counts.iter().sorted_by(|a, b| a.1.cmp(b.1)).rev() {
-                // println!("{}: {}", show_card(**card), count);
+                // println!("{}: {}", _show_card(**card), count);
                 match (**card == 0, *count == 5) {
                     (true, true) => return CType::FiveKind,
                     (true, false) => continue,
@@ -268,7 +266,7 @@ mod m_day7_b {
     }
 }
 
-pub fn day7_b(input: &String) -> String {
+pub fn day7_b(input: &str) -> String {
     let mut hands = input
         .lines()
         .map(m_day7_b::to_hand)
@@ -276,7 +274,7 @@ pub fn day7_b(input: &String) -> String {
     hands.sort();
     // for hand in hands.iter() {
     //     for card in hand.cards {
-    //         print!("{}", show_card(card))
+    //         print!("{}", _show_card(card))
     //     }
     //     println!(" {:?} {}", hand.get_ctype(), hand.bet)
     // }

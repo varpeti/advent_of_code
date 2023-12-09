@@ -1,4 +1,4 @@
-pub fn day1_a(input: &String) -> String {
+pub fn day1_a(input: &str) -> String {
     format!(
         "{}",
         input
@@ -24,7 +24,7 @@ const NUMS: [&str; 18] = [
     "5", "6", "7", "8", "9",
 ];
 
-pub fn day1_b(input: &String) -> String {
+pub fn day1_b(input: &str) -> String {
     format!(
         "{}",
         input

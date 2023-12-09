@@ -1,15 +1,15 @@
-pub fn day4_a(input: &String) -> String {
+pub fn day4_a(input: &str) -> String {
     let mut sum = 0;
     for line in input.lines() {
         let mut game = 0;
         let mut wining = [false; 99];
         let mut s = line.split(" | ");
-        for num_str in s.next().expect("winings").split(" ") {
+        for num_str in s.next().expect("winings").split(' ') {
             if let Ok(num) = num_str.parse::<u8>() {
                 wining[(num - 1) as usize] = true
             }
         }
-        for num_str in s.next().expect("my_nums").split(" ") {
+        for num_str in s.next().expect("my_nums").split(' ') {
             if let Ok(num) = num_str.parse::<u8>() {
                 if wining[(num - 1) as usize] {
                     match game {
@@ -30,7 +30,7 @@ struct Card {
     nums: Vec<u8>,
 }
 
-pub fn day4_b(input: &String) -> String {
+pub fn day4_b(input: &str) -> String {
     let mut sum = 0;
     let mut cards = Vec::<Card>::new();
     let mut counts = Vec::<usize>::new();

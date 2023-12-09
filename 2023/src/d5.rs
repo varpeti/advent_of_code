@@ -28,7 +28,7 @@ impl Mapping {
 }
 
 fn parse_line(line: &str) -> Mapping {
-    let mut line = line.split(" ");
+    let mut line = line.split(' ');
     Mapping {
         dst: line.next().expect("dst").parse().expect("pdst"),
         src: line.next().expect("src").parse().expect("psrc"),
@@ -39,18 +39,18 @@ fn parse_line(line: &str) -> Mapping {
 fn parse_block(block: &str) -> BTreeSet<Mapping> {
     block
         .trim_end()
-        .split("\n")
+        .split('\n')
         .skip(1)
         .map(parse_line)
         .collect()
 }
 
-pub fn day5_a(input: &String) -> String {
+pub fn day5_a(input: &str) -> String {
     let mut input = input.split("\n\n");
     let seeds = input
         .next()
         .expect("seeds")
-        .split(" ")
+        .split(' ')
         .skip(1)
         .map(|num| num.parse::<u64>().expect("num"));
     let block_of_mappings: Vec<BTreeSet<Mapping>> = input.map(parse_block).collect();
@@ -82,13 +82,13 @@ pub fn day5_a(input: &String) -> String {
     format!("{}", lowest)
 }
 
-pub fn day5_b(input: &String) -> String {
+pub fn day5_b(input: &str) -> String {
     let mut input = input.split("\n\n");
     let mut seeds = Vec::<Mapping>::new();
     for mut chunk in &input
         .next()
         .expect("seeds")
-        .split(" ")
+        .split(' ')
         .skip(1)
         .map(|num| num.parse::<u64>().expect("num"))
         .chunks(2)

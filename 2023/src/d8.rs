@@ -1,7 +1,5 @@
 use std::collections::HashMap;
 
-use itertools::Itertools;
-
 type Node = [u8; 3];
 
 #[derive(Debug, Clone)]
@@ -37,7 +35,7 @@ fn parse_line(line: &str) -> (Node, Neigh) {
     (name, Neigh { left, right })
 }
 
-pub fn day8_a(input: &String) -> String {
+pub fn day8_a(input: &str) -> String {
     let mut input = input.split("\n\n");
     let instructions = input
         .next()
@@ -50,8 +48,8 @@ pub fn day8_a(input: &String) -> String {
         .lines()
         .map(parse_line)
         .collect::<Nodes>();
-    let mut current_node: &Node = &['A' as u8; 3];
-    let goal: Node = ['Z' as u8; 3];
+    let mut current_node: &Node = &[b'A'; 3];
+    let goal: Node = [b'Z'; 3];
     let mut count: u64 = 0;
     while *current_node != goal {
         for instruction in instructions.iter() {
@@ -66,7 +64,7 @@ pub fn day8_a(input: &String) -> String {
     format!("{}", count)
 }
 
-pub fn day8_b(input: &String) -> String {
+pub fn day8_b(input: &str) -> String {
     let mut input = input.split("\n\n");
     let instructions = input
         .next()
@@ -81,7 +79,7 @@ pub fn day8_b(input: &String) -> String {
         .collect::<Nodes>();
     let mut current_nodes = nodes
         .iter()
-        .filter_map(|(node, _)| match node[2] == 'A' as u8 {
+        .filter_map(|(node, _)| match node[2] == b'A' {
             true => Some(node),
             false => None,
         })
@@ -101,17 +99,14 @@ pub fn day8_b(input: &String) -> String {
                 err => panic!("Invalid instruction: ({})", err),
             };
             counts[i] += 1;
-            if current_node[2] == 'Z' as u8 {
+            if current_node[2] == b'Z' {
                 break;
             }
         }
         //println!("");
     }
     println!("{:?}", counts);
-    let res = counts
-        .into_iter()
-        .reduce(|acc, count| lcm(acc, count))
-        .expect("res");
+    let res = counts.into_iter().reduce(lcm).expect("res");
 
     format!("{}", res)
 }

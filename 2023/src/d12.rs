@@ -1,10 +1,10 @@
 
-pub fn day12_a(input: &String) -> String {
+pub fn day12_a(input: &str) -> String {
     drop(input.to_owned());
-    format!("a")
+    format!("{}", 'a')
 }
 
-pub fn day12_b(input: &String) -> String {
+pub fn day12_b(input: &str) -> String {
     drop(input.to_owned());
-    format!("b")
+    format!("{}", 'b')
 }

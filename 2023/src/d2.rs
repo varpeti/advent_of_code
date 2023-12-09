@@ -26,7 +26,7 @@ impl Color {
 // Wow its a mess, I think it is pretty unreadable... TODO refactor...
 //                                  this probably never happen ^
 
-pub fn day2_a(input: &String) -> String {
+pub fn day2_a(input: &str) -> String {
     format!(
         "{}",
         input
@@ -71,7 +71,7 @@ pub fn day2_a(input: &String) -> String {
     )
 }
 
-pub fn day2_b(input: &String) -> String {
+pub fn day2_b(input: &str) -> String {
     format!(
         "{}",
         input
@@ -125,8 +125,8 @@ pub fn day2_b(input: &String) -> String {
                         }
                         acc
                     });
-                let d = draws.into_iter().map(|(_color, num)| num).product::<u32>();
-                d
+
+                draws.into_values().product::<u32>()
             })
             .sum::<u32>()
     )
