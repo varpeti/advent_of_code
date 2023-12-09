@@ -2,12 +2,12 @@ use std::collections::HashSet;
 
 type Trees = Vec<Vec<u8>>;
 
-fn parse_trees(input: &String) -> Trees {
+fn parse_trees(input: &str) -> Trees {
     let mut trees = Trees::new();
     for input_row in input.lines() {
         let mut tree_row = Vec::new();
         for c in input_row.chars() {
-            let tree_height = (c as u8) - ('0' as u8);
+            let tree_height = (c as u8) - b'0';
             tree_row.push(tree_height);
         }
         trees.push(tree_row);
@@ -84,7 +84,7 @@ fn get_visible_coords(to: Direction, trees: &Trees) -> HashSet<(usize, usize)> {
     coords
 }
 
-pub fn day8_a(input: &String) -> String {
+pub fn day8_a(input: &str) -> String {
     let trees = parse_trees(input);
     let mut coords = HashSet::new();
     for to in [
@@ -95,8 +95,7 @@ pub fn day8_a(input: &String) -> String {
     ] {
         let new_coords = get_visible_coords(to, &trees);
         coords = coords
-            .union(&new_coords)
-            .map(|&coord| coord)
+            .union(&new_coords).copied()
             .collect::<HashSet<_>>();
     }
     // dgb
@@ -108,7 +107,7 @@ pub fn day8_a(input: &String) -> String {
                 print!(".");
             }
         }
-        println!("");
+        println!();
     }
     format!("{}", coords.len())
 }
@@ -122,7 +121,7 @@ fn get_or_9(trees: &Trees, y: usize, x: usize) -> u8 {
     9
 }
 
-pub fn day8_b(input: &String) -> String {
+pub fn day8_b(input: &str) -> String {
     let trees = parse_trees(input);
     let xx = trees[0].len();
     let yy = trees.len();
@@ -138,20 +137,20 @@ pub fn day8_b(input: &String) -> String {
                 }
             }
             //to Left
-                for n in (0..x).rev() {
-                    visible[1] += 1;
-                    if get_or_9(&trees, y, n) >= trees[y][x] {
-                        break;
-                    }
+            for n in (0..x).rev() {
+                visible[1] += 1;
+                if get_or_9(&trees, y, n) >= trees[y][x] {
+                    break;
                 }
+            }
             //to Bottom
-            for n in y+1..yy {
+            for n in y + 1..yy {
                 visible[2] += 1;
                 if get_or_9(&trees, n, x) >= trees[y][x] {
                     break;
                 }
             }
-            //to Top 
+            //to Top
             for n in (0..y).rev() {
                 visible[3] += 1;
                 if get_or_9(&trees, n, x) >= trees[y][x] {

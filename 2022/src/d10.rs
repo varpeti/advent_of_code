@@ -2,7 +2,7 @@ use std::str::Lines;
 
 const CYCLE_PERIOD: i32 = 40;
 
-pub fn day10_a(input: &String) -> String {
+pub fn day10_a(input: &str) -> String {
     let mut sum: i128 = 0;
     let mut x = 1;
     let mut prev_x = 1;
@@ -13,7 +13,7 @@ pub fn day10_a(input: &String) -> String {
             _ if line.starts_with("addx") => {
                 prev_x = x;
                 x += line
-                    .split(" ")
+                    .split(' ')
                     .last()
                     .expect("add")
                     .parse::<i32>()
@@ -48,7 +48,7 @@ fn get_next_task(lines: &mut Lines) -> Option<Task> {
     match lines.next() {
         Some(add) if add.starts_with("addx") => {
             let dx = add
-                .split(" ")
+                .split(' ')
                 .last()
                 .expect("add")
                 .parse::<i32>()
@@ -67,7 +67,7 @@ fn get_next_task(lines: &mut Lines) -> Option<Task> {
     }
 }
 
-pub fn day10_b(input: &String) -> String {
+pub fn day10_b(input: &str) -> String {
     let mut reg_x = 1;
     let mut lines = input.lines();
     let mut current_task = get_next_task(&mut lines);
@@ -86,7 +86,7 @@ pub fn day10_b(input: &String) -> String {
                 }
             }
         }
-        println!("");
+        println!();
     }
-    format!("PRINTED_ANSWER")
+    "PRINTED_ANSWER".to_string()
 }

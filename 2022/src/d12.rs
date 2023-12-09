@@ -27,9 +27,9 @@ fn _print_map(map: &Vec<Vec<Node>>, start_node: &Node, end_node: &Node) {
                 print!("{:3}", node.height);
             }
         }
-        println!("");
+        println!();
     }
-    println!("");
+    println!();
 }
 
 fn _print_solution(map: &Vec<Vec<Node>>, solution: &(Vec<Node>, u32)) {
@@ -41,12 +41,12 @@ fn _print_solution(map: &Vec<Vec<Node>>, solution: &(Vec<Node>, u32)) {
         for n in line.iter() {
             print!("{:3}", n);
         }
-        println!("");
+        println!();
     }
-    println!("");
+    println!();
 }
 
-fn parse_input(input: &String) -> (Vec<Vec<Node>>, (usize, usize), (usize, usize)) {
+fn parse_input(input: &str) -> (Vec<Vec<Node>>, (usize, usize), (usize, usize)) {
     let mut start_node = (0, 0);
     let mut end_node = (0, 0);
     (
@@ -63,9 +63,9 @@ fn parse_input(input: &String) -> (Vec<Vec<Node>>, (usize, usize), (usize, usize
                         }
                         'E' => {
                             end_node = (x, y);
-                            Node::new(x, y, 'z' as u8 - 'a' as u8)
+                            Node::new(x, y, b'z' - b'a')
                         }
-                        c => Node::new(x, y, c as u8 - 'a' as u8),
+                        c => Node::new(x, y, c as u8 - b'a'),
                     })
                     .collect()
             })
@@ -89,7 +89,7 @@ fn get_neighs(map: &Vec<Vec<Node>>, node: &Node) -> Vec<(Node, u32)> {
     neighs
 }
 
-pub fn day12_a(input: &String) -> String {
+pub fn day12_a(input: &str) -> String {
     let (map, start_node_coord, end_node_coord) = parse_input(input);
     let start_node = &map[start_node_coord.1][start_node_coord.0];
     let end_node = &map[end_node_coord.1][end_node_coord.0];
@@ -108,7 +108,7 @@ pub fn day12_a(input: &String) -> String {
     format!("{}", solution.1)
 }
 
-pub fn day12_b(input: &String) -> String {
+pub fn day12_b(input: &str) -> String {
     let (map, _start_node_coord, end_node_coord) = parse_input(input);
     let end_node = &map[end_node_coord.1][end_node_coord.0];
     let mut best_solution = (Vec::new(), u32::MAX);

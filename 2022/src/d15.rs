@@ -1,4 +1,3 @@
-
 use std::{cell::RefCell, rc::Rc};
 
 use pathfinding::num_traits::PrimInt;
@@ -82,7 +81,7 @@ impl Pair {
         if p.get_dist(&self.s) <= self.r {
             return Status::Nothing;
         }
-        return Status::Possible;
+        Status::Possible
     }
 
     fn get_max(&self) -> Pos {
@@ -111,7 +110,7 @@ fn set_bounds(p: &Pair, min_p: &mut Pos, max_p: &mut Pos) {
     }
 }
 
-fn parse_input(input: &String) -> (Vec<Pair>, Pos, Pos) {
+fn parse_input(input: &str) -> (Vec<Pair>, Pos, Pos) {
     let mut min_p = Pos::new(i32::MAX, i32::MAX);
     let mut max_p = Pos::new(i32::MIN, i32::MIN);
     let pair_reg = Regex::new(
@@ -133,7 +132,7 @@ fn parse_input(input: &String) -> (Vec<Pair>, Pos, Pos) {
     )
 }
 
-pub fn day15_a(input: &String) -> String {
+pub fn day15_a(input: &str) -> String {
     let (pairs, min_p, max_p) = parse_input(input);
     let y = 2000000;
     let mut count = 0;
@@ -155,9 +154,9 @@ pub fn day15_a(input: &String) -> String {
     format!("{}", count)
 }
 
-pub fn day15_b(input: &String) -> String {
-    drop(input);
-    format!("b")
+pub fn day15_b(input: &str) -> String {
+    drop(input.to_owned());
+    format!("{}", 'b')
 }
 
 type Neigh<N, V> = Option<Rc<RefCell<QuadTree<N, V>>>>;
@@ -180,8 +179,8 @@ impl<N: PrimInt + Default + std::fmt::Debug, V: Clone + Default> QuadTree<N, V> 
         Self {
             x,
             y,
-            width: width.clone(),
-            height: height.clone(),
+            width,
+            height,
             value,
             is_leaf: true,
             area: width * height,
@@ -196,7 +195,6 @@ impl<N: PrimInt + Default + std::fmt::Debug, V: Clone + Default> QuadTree<N, V> 
                 self.merge();
             }
             self.value = value;
-            return;
         } else if self.is_fully_outside(x, y, width, height) {
             return;
         } else {
@@ -329,12 +327,12 @@ impl<N: PrimInt + Default + std::fmt::Debug, V: Clone + Default> QuadTree<N, V> 
 impl<N: PrimInt + Default + std::fmt::Debug, V: Clone + Default> Clone for QuadTree<N, V> {
     fn clone(&self) -> Self {
         let mut new = QuadTree::<N, V>::new(
-            self.x.clone(),
-            self.y.clone(),
-            self.width.clone(),
-            self.height.clone(),
+            self.x,
+            self.y,
+            self.width,
+            self.height,
             self.value.clone(),
-            self.min_size.clone(),
+            self.min_size,
         );
         if self.is_leaf {
             return new;

@@ -1,6 +1,6 @@
 use std::collections::{HashSet, VecDeque};
 
-fn naive_solution(size_of_marker: usize, input: &String) -> Option<String> {
+fn naive_solution(size_of_marker: usize, input: &str) -> Option<String> {
     let mut chars = input.chars().enumerate();
     let mut previous = VecDeque::new();
     for _ in 0..(size_of_marker - 1) {
@@ -17,16 +17,16 @@ fn naive_solution(size_of_marker: usize, input: &String) -> Option<String> {
     None
 }
 
-pub fn day6_a(input: &String) -> String {
+pub fn day6_a(input: &str) -> String {
     match naive_solution(4, input) {
-        Some(index) => format!("{}", index),
-        None => format!("Not found!"),
+        Some(index) => index.to_string(),
+        None => "Not found!".to_string(),
     }
 }
 
-pub fn day6_b(input: &String) -> String {
+pub fn day6_b(input: &str) -> String {
     match naive_solution(14, input) {
-        Some(index) => format!("{}", index),
-        None => format!("Not found!"),
+        Some(index) => index.to_string(),
+        None => "Not found!".to_string(),
     }
 }

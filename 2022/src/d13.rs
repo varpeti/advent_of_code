@@ -90,7 +90,7 @@ fn parse_signal(chars: &mut Peekable<Chars>) -> Data {
     Data::Array(elems)
 }
 
-fn parse_input(input: &String) -> Vec<(Data, Data)> {
+fn parse_input(input: &str) -> Vec<(Data, Data)> {
     let mut lines = input.lines();
     let mut signals = vec![];
     loop {
@@ -107,7 +107,7 @@ fn parse_input(input: &String) -> Vec<(Data, Data)> {
     signals
 }
 
-pub fn day13_a(input: &String) -> String {
+pub fn day13_a(input: &str) -> String {
     let data = parse_input(input);
     let mut righ_order = 0;
     for (i, (a, b)) in data.iter().enumerate() {
@@ -118,10 +118,10 @@ pub fn day13_a(input: &String) -> String {
     format!("{righ_order}")
 }
 
-pub fn day13_b(input: &String) -> String {
+pub fn day13_b(input: &str) -> String {
     let mut signals = input
         .lines()
-        .filter(|&line| line != "")
+        .filter(|&line| !line.is_empty())
         .map(|line| parse_signal(&mut line.chars().peekable()))
         .collect::<Vec<_>>();
     let driver_signals = [

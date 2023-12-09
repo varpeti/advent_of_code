@@ -30,7 +30,7 @@ trait UnitsMethods {
 
 impl UnitsMethods for Units {
     fn ensure_y(&mut self, y: &u32) {
-        if !self.contains_key(&y) {
+        if !self.contains_key(y) {
             self.insert(*y, HashMap::new());
         }
     }
@@ -69,17 +69,17 @@ fn _visualize(units: &Units, minc: &Coord, maxc: &Coord) {
                 }
             );
         }
-        println!("");
+        println!();
     }
 }
 
-fn parse_input(input: &String) -> (Units, Coord, Coord) {
+fn parse_input(input: &str) -> (Units, Coord, Coord) {
     let mut minc = Coord::new(500, 0);
     let mut maxc = Coord::new(500, 0);
     let mut units = Units::new();
     for line in input.lines() {
         let mut stone_line = line.split(" -> ").map(|stone| {
-            let mut coord = stone.split(",");
+            let mut coord = stone.split(',');
             let x = coord.next().expect("x").parse::<u32>().expect("x parse");
             let y = coord.next().expect("y").parse::<u32>().expect("y parse");
             Coord::new(x, y)
@@ -111,13 +111,13 @@ fn simulate_sand_a(units: &mut Units, max_y: u32) -> bool {
         let mut ok = false;
         for moves in [(0, 1), (-1, 1), (1, 1)] {
             match units.get_xy(
-                (sand.0 as i32 + moves.0) as u32,
-                (sand.1 as i32 + moves.1) as u32,
+                (sand.0 + moves.0) as u32,
+                (sand.1 + moves.1) as u32,
             ) {
                 Some(UnitType::Sand) | Some(UnitType::Stone) => (),
                 Some(UnitType::Source) | None => {
-                    sand.0 = sand.0 + moves.0;
-                    sand.1 = sand.1 + moves.1;
+                    sand.0 += moves.0;
+                    sand.1 += moves.1;
                     if sand.1 as u32 >= max_y {
                         return false;
                     }
@@ -147,7 +147,7 @@ fn run_simulation_a(units: &mut Units, _minc: &Coord, maxc: &Coord) -> u32 {
     counter
 }
 
-pub fn day14_a(input: &String) -> String {
+pub fn day14_a(input: &str) -> String {
     let (mut units, minc, maxc) = parse_input(input);
     units.ensure_y(&0);
     units.insert_xy(500, 0, UnitType::Source);
@@ -181,8 +181,8 @@ fn simulate_sand_b(units: &mut Units, max_y: u32, minc: &mut Coord, maxc: &mut C
         if sand == (500, 0) {
             return false;
         }
-        units.ensure_y(&(sand.1 as u32));
-        units.insert_xy(sand.0 as u32, sand.1 as u32, UnitType::Sand);
+        units.ensure_y(&{ sand.1 });
+        units.insert_xy(sand.0, sand.1, UnitType::Sand);
 
         //For bounds
         minc.x = minc.x.min(sand.0);
@@ -202,11 +202,11 @@ fn run_simulation_b(units: &mut Units, max_y: u32, minc: &mut Coord, maxc: &mut 
         }
         counter += 1;
     }
-    _visualize(&units, &minc, &maxc);
+    _visualize(units, minc, maxc);
     counter
 }
 
-pub fn day14_b(input: &String) -> String {
+pub fn day14_b(input: &str) -> String {
     let (mut units, mut minc, mut maxc) = parse_input(input);
     units.ensure_y(&0);
     units.insert_xy(500, 0, UnitType::Source);

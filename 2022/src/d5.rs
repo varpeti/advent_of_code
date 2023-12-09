@@ -29,7 +29,7 @@ impl Ship {
         }
     }
 
-    fn parse(&mut self, input: &String, crate_mover: &CrateMover) {
+    fn parse(&mut self, input: &str, crate_mover: &CrateMover) {
         let lines = input.lines();
         let mut state = ParseStatus::Cargo;
         for line in lines {
@@ -42,14 +42,14 @@ impl Ship {
     }
 
     fn parse_cargo(&mut self, line: &str) -> ParseStatus {
-        if line == "" {
+        if line.is_empty() {
             return ParseStatus::Moving;
         }
         let row = format!("{} ", line); // Extra space for regex
         let row_capture = self.row_re.captures_iter(row.as_str());
         for (i, stuff) in row_capture.enumerate() {
             let stuff = stuff[1].chars().next().expect("not a char");
-            if let None = self.stacks.get(i) {
+            if self.stacks.get(i).is_none() {
                 // initialize the stacks, TODO refactor
                 self.stacks.push(Vec::new());
             }
@@ -59,7 +59,7 @@ impl Ship {
             }
             self.stacks
                 .get_mut(i)
-                .expect(format!("{} index", i).as_str())
+                .unwrap_or_else(|| panic!("{} index", i))
                 .insert(0, stuff); // yeah.. it is expensive, TODO refactor
         }
         ParseStatus::Cargo
@@ -100,7 +100,7 @@ impl Ship {
                 }
             }
             CrateMover::V9001 => {
-                // It should be a better solution... 
+                // It should be a better solution...
                 // but slices are killed my pc... so O(2num) is fine..
                 let mut temp_stack = Vec::new();
                 for _ in 0..num {
@@ -125,14 +125,14 @@ impl Ship {
     }
 }
 
-pub fn day5_a(input: &String) -> String {
+pub fn day5_a(input: &str) -> String {
     let mut ship = Ship::new();
     ship.parse(input, &CrateMover::V9000);
-    format!("{}", ship.get_top_stuff_from_stacks())
+    ship.get_top_stuff_from_stacks().to_string()
 }
 
-pub fn day5_b(input: &String) -> String {
+pub fn day5_b(input: &str) -> String {
     let mut ship = Ship::new();
     ship.parse(input, &CrateMover::V9001);
-    format!("{}", ship.get_top_stuff_from_stacks())
+    ship.get_top_stuff_from_stacks().to_string()
 }

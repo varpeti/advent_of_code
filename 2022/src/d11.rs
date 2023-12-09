@@ -22,18 +22,18 @@ struct Monkey {
     nok: usize,
 }
 
-fn parse_monkeys(input: &String) -> Vec<Rc<RefCell<Monkey>>> {
+fn parse_monkeys(input: &str) -> Vec<Rc<RefCell<Monkey>>> {
     let mut lines = input.lines();
     let mut monkeys = Vec::new();
     loop {
         // One Monkey
-        if let None = lines.next() {
+        if lines.next().is_none() {
             // Monkey id:
             break;
         }
         let items = p!(lines, " ")
             .skip(2)
-            .map(|item| p!(item.split(","), u64))
+            .map(|item| p!(item.split(','), u64))
             .collect::<Vec<_>>();
         let operation = match p!(lines, " ").skip(4).collect::<Vec<_>>() {
             add if add[0] == "+" => Operation::Add(add[1].parse::<u64>().expect("add")),
@@ -102,7 +102,7 @@ fn solve(monkeys: Vec<Rc<RefCell<Monkey>>>, worry: &dyn Fn(u64) -> u64, rounds: 
     )
 }
 
-pub fn day11_a(input: &String) -> String {
+pub fn day11_a(input: &str) -> String {
     let monkeys = parse_monkeys(input);
     println!("{:?}", monkeys);
     solve(
@@ -112,14 +112,8 @@ pub fn day11_a(input: &String) -> String {
     )
 }
 
-pub fn day11_b(input: &String) -> String {
+pub fn day11_b(input: &str) -> String {
     let monkeys = parse_monkeys(input);
     let common_divisior = monkeys.iter().map(|m| m.borrow().test).product::<u32>() as u64;
-    solve(
-        monkeys,
-        &|value: u64| {
-            value % common_divisior
-        },
-        10000,
-    )
+    solve(monkeys, &|value: u64| value % common_divisior, 10000)
 }

@@ -32,9 +32,7 @@ fn test(day: usize) {
 }
 
 fn main() {
-    let day = env::args()
-        .skip(1)
-        .next()
+    let day = env::args().nth(1)
         .expect("usage: advent_of_code day_number")
         .parse::<usize>()
         .expect("parse error: day should be a number");

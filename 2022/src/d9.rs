@@ -51,7 +51,7 @@ impl Rope {
     }
 
     fn parse_head_movement(movement: &str) -> Action {
-        let mut movement = movement.split(" ");
+        let mut movement = movement.split(' ');
         let direction = movement.next().expect("direction");
         let step = movement
             .next()
@@ -111,16 +111,16 @@ impl Rope {
         let slices = self.knots.split_at_mut(id);
         let head = &slices.0[id - 1];
         let tail = &mut slices.1[0];
-        let d = tail.diff(&head);
+        let d = tail.diff(head);
         if d.x.abs() <= 1 && d.y.abs() <= 1 {
             return; // Touching
         }
-        tail.y -= d.y.signum() * 1;
-        tail.x -= d.x.signum() * 1;
+        tail.y -= d.y.signum();
+        tail.x -= d.x.signum();
     }
 }
 
-pub fn day9_a(input: &String) -> String {
+pub fn day9_a(input: &str) -> String {
     let mut rope = Rope::new(2);
     let mut lines = input.lines();
     let mut visited_by_tail = HashSet::new();
@@ -130,7 +130,7 @@ pub fn day9_a(input: &String) -> String {
     format!("{}", visited_by_tail.len())
 }
 
-pub fn day9_b(input: &String) -> String {
+pub fn day9_b(input: &str) -> String {
     let mut rope = Rope::new(10);
     let mut lines = input.lines();
     let mut visited_by_tail = HashSet::new();

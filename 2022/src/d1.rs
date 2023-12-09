@@ -1,8 +1,8 @@
-pub fn day1_a(input: &String) -> String {
+pub fn day1_a(input: &str) -> String {
     let max_calories = input
         .split("\n\n")
         .map(|elf| {
-            elf.split("\n")
+            elf.split('\n')
                 .map(|calories| calories.parse::<u32>().unwrap_or(0))
                 .sum::<u32>()
         })
@@ -11,11 +11,11 @@ pub fn day1_a(input: &String) -> String {
     format!("{}", max_calories)
 }
 
-pub fn day1_b(input: &String) -> String {
+pub fn day1_b(input: &str) -> String {
     let calories_per_elf = input
         .split("\n\n")
         .map(|elf| {
-            elf.split("\n")
+            elf.split('\n')
                 .map(|calories| calories.parse::<u32>().unwrap_or(0))
                 .sum::<u32>()
         })
