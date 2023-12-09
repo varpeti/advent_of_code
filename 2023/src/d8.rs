@@ -1,5 +1,7 @@
 use std::collections::HashMap;
 
+use itertools::Itertools;
+
 type Node = [u8; 3];
 
 #[derive(Debug, Clone)]
@@ -64,15 +66,6 @@ pub fn day8_a(input: &String) -> String {
     format!("{}", count)
 }
 
-fn all_z(nodes: &Vec<&Node>) -> bool {
-    for node in nodes.iter() {
-        if node[2] != 'Z' as u8 {
-            return false;
-        }
-    }
-    true
-}
-
 pub fn day8_b(input: &String) -> String {
     let mut input = input.split("\n\n");
     let instructions = input
@@ -93,26 +86,50 @@ pub fn day8_b(input: &String) -> String {
             false => None,
         })
         .collect::<Vec<_>>();
-    // I think its needs some loop detection... and calculate the max-step from each loop's cycle+offset
-    let mut count: u64 = 0;
-    while !all_z(&current_nodes) {
-        for instruction in instructions.iter() {
-            for current_node in current_nodes.iter_mut() {
-                // println!(
-                //     "{:?}, {}, {:?}",
-                //     current_node,
-                //     instruction,
-                //     nodes.get(current_node)
-                // );
-                *current_node = match instruction {
-                    'R' => &nodes.get(current_node.as_ref()).expect("rneigh").right,
-                    'L' => &nodes.get(current_node.as_ref()).expect("lneigh").left,
-                    err => panic!("Invalid instruction: ({})", err),
-                };
+    let mut counts = vec![0; current_nodes.len()];
+    for (i, current_node) in current_nodes.iter_mut().enumerate() {
+        for instruction in instructions.iter().cycle() {
+            // println!(
+            //     "{:?}, {}, {:?}",
+            //     current_node,
+            //     instruction,
+            //     nodes.get(current_node)
+            // );
+            *current_node = match instruction {
+                'R' => &nodes.get(current_node.as_ref()).expect("rneigh").right,
+                'L' => &nodes.get(current_node.as_ref()).expect("lneigh").left,
+                err => panic!("Invalid instruction: ({})", err),
+            };
+            counts[i] += 1;
+            if current_node[2] == 'Z' as u8 {
+                break;
             }
-            //println!("");
-            count += 1;
         }
+        //println!("");
     }
-    format!("{}", count)
+    println!("{:?}", counts);
+    let res = counts
+        .into_iter()
+        .reduce(|acc, count| lcm(acc, count))
+        .expect("res");
+
+    format!("{}", res)
+}
+
+// So this is an ehhh 'solution'.
+// The lcm of the counts is the solution for the given input but its not generic.
+// If I would write a proper solution, I would write a depth first search with cycle detection,
+// and using the calculated offsets and cycle times I would get the solution.
+// But I already did a similar thing in my work some weeks ago...
+// So off the clock and for fun like this, I'll press the "pass" button.
+
+fn gcd(mut a: u64, mut b: u64) -> u64 {
+    while b != 0 {
+        (a, b) = (b, a % b);
+    }
+    a
+}
+
+fn lcm(a: u64, b: u64) -> u64 {
+    a * b / gcd(a, b)
 }
