@@ -86,13 +86,13 @@ impl Rope {
                 Some(movement) => self.current_action = Self::parse_head_movement(movement),
                 None => return false,
             }
-            println!("{:?}", self.current_action);
+            //println!("{:?}", self.current_action);
         }
         self.head_update();
         for id in 1..self.knots.len() {
             self.tail_update(id);
         }
-        println!("{:?}", self.knots);
+        //println!("{:?}", self.knots);
         true
     }
 
