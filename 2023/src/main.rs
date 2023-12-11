@@ -32,11 +32,22 @@ fn test(day: usize) {
 }
 
 fn main() {
-    let day = env::args()
+    let mut args = env::args();
+    let day = args
         .nth(1)
-        .expect("usage: advent_of_code day_number")
+        .expect("usage: advent_of_code [day_number] <test|answer>")
         .parse::<usize>()
         .expect("parse error: day should be a number");
-    answer(day);
-    test(day);
+
+    match args.next() {
+        Some(run_type) => match run_type.as_str() {
+            "test" => test(day),
+            "answer" => answer(day),
+            err => panic!("Invalid argument! ({}) Use 'test' or 'answer'.", err),
+        },
+        None => {
+            answer(day);
+            test(day);
+        }
+    }
 }
