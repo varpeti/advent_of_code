@@ -1,5 +1,3 @@
-use std::{collections::HashSet, usize};
-
 use itertools::Itertools;
 
 #[derive(Debug, Clone, PartialEq)]
@@ -38,7 +36,7 @@ impl Pipe {
             Pipe::PJ => '╝',
             Pipe::P7 => '╗',
             Pipe::PF => '╔',
-            Pipe::PG => '.',
+            Pipe::PG => ' ',
             Pipe::PS => '0',
         }
     }
